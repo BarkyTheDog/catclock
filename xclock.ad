@@ -1,0 +1,18 @@
+#
+# XClock
+#
+XClock*font 	  : 9x15
+XClock*foreground : black
+XClock*background : blue
+XClock*highlight  : black
+XClock*hands      : red
+XClock*mode       : cat
+XClock*update     : 1
+XClock*alarm      : off
+XClock*bell       : on
+XClock*chime      : on
+XClock*period     : 5
+XClock*catColor   : black
+XClock*detailColor: white
+XClock*tieColor	  : red
+XClock*nTails     : 16

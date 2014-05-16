@@ -1,0 +1,18 @@
+
+SRCS = xclock.c alarm.c
+OBJS = xclock.o alarm.o
+
+     MOTIF = ${BUILDLINK_DIR}
+MOTIF_LIBS = ${MOTIFLIB} -lSM -lICE -lXt
+MOTIF_INCS = -I$(MOTIF)/include
+  INCLUDES = -I. $(MOTIF_INCS) $(TOP_X_INCLUDES)
+   DEFINES = -DHAS_GNU_EMACS
+
+LOCAL_LIBRARIES = $(MOTIF_LIBS)
+  SYS_LIBRARIES = -lX11 -lm
+
+
+all:: xclock
+
+ComplexProgramTarget(xclock)
+InstallAppDefaults(xclock)

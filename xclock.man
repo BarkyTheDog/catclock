@@ -1,0 +1,244 @@
+.TH XCLOCK 1 "Release 4" "X Version 11"
+.SH NAME
+xclock - analog / digital / cat clock for X
+.SH SYNOPSIS
+.ta 8n
+\fBxclock\fP	[-\fItoolkitoption\fP ...] 
+.br
+	[-mode \fIanalog | digital | cat\fP]
+.br
+	[-alarm] [-bell] [-chime] [-file \fIfilename\fP] 
+.br
+	[-hd \fIcolor\fP] [-hl \fIcolor\fP] 
+.br
+	[-catcolor \fIcolor\fP] [-detailcolor \fIcolor\fP] [-tiecolor \fIcolor\fP]
+.br
+	[-update \fIseconds\fP] [-padding \fInumber\fP]
+.br
+	[-period \fIseconds\fP] [-ntails \fInumber\fP] [-help] 
+.SH DESCRIPTION
+The
+.I xclock 
+program displays the time in analog, digital, or cat form.  The time is continuously
+updated at a frequency which may be specified by the user.  
+.SH OPTIONS
+.I Xclock
+accepts all of the standard X Toolkit command line options along with the 
+additional options listed below:
+.TP 8
+.B \-mode  \fImode\fP
+Determines display mode. Modes are \fIanalog\fP, \fIdigital\fP, and \fIcat\fP.  Analog mode
+displays a conventional 12 hour clock face with ``ticks''
+for each minute and stroke marks on each hour. Digital mode displays an
+ascii string corresponding to the time. Cat mode displays an image of
+the famous "Kit Cat (R)" plastic clock, complete with pendulum tail. 
+The default is \fIanalog\fP.
+.TP 8
+.B \-alarm 
+Turns the alarm on.
+If the alarm file exists and has valid alarm entries, a bell
+is displayed in the clock window.
+.TP 8
+.B \-bell
+Turns the alarm bell on, sounding when an alarm is reached.
+.TP 8
+.B \-chime
+This option indicates that the clock should chime 
+once on the half hour and twice on the hour.
+.TP 8
+.B \-file \fIalarmfile\fP
+Specifies an alternate alarm file.
+The default is \fI~/.Xclock\fP.
+.TP 8
+.B \-hd \fIcolor\fP
+This option specifies the color of the hands on an analog clock.  The default
+is \fIblack\fP.
+.TP 8
+.B \-hl \fIcolor\fP
+This option specifies the color of the edges of the hands on an analog clock,
+and is only useful on color displays.  The default is \fIblack\fP.
+.TP 8
+.B \-catcolor \fIcolor\fP
+For cat mode -- determines the color of the cat's body.
+The default color is \fIblack\fP.
+.TP 8
+.B \-detailcolor \fIcolor\fP
+For cat mode -- determines the color of the cat's face, paws, and belly.
+The default color is \fIwhite\fP.
+.TP 8
+.B \-tiecolor \fIcolor\fP
+For cat mode -- determines the color of the cat's tie.
+The default color is \fIwhite\fP.
+.TP 8
+.B \-update \fIseconds\fP
+This option specifies the frequency in seconds at which \fIxclock\fP
+should update its display.  If the clock is obscured and then exposed,
+it will be updated immediately.  A value of less than 30 seconds will enable a
+second hand on an analog clock.  The default is \fI60\fP.
+.TP 8
+.B \-padding \fInumber\fP
+This option specifies the width in pixels of the padding 
+between the window border and clock text or picture.  The default is \fI10\fP
+on a digital clock and \fI8\fP on an analog clock.
+.TP 8
+.B \-period \fIseconds\fP
+Gives the period in seconds of the alarm bell (default is \fI60\fP).
+.TP 8
+.B \-ntails \fInumber\fP
+In cat mode, determines the number of tails per ``sweep'', which 
+affects the smoothness of the swinging pendulum tail. The default
+is \fI16\fP.
+.TP 8
+.B \-help
+This option indicates that a brief summary of the allowed options should be
+printed on the standard error.
+
+.SH X DEFAULTS
+This program understands all of the usual Xt resources as well as the following:
+.PP
+.TP 8
+.B mode (\fPclass\fB String)
+Specifies the display mode -- \fIanalog\fP, \fIdigital\fP, or \fIcat\fP.  The
+default is \fIanalog\fP.
+.TP 8
+.B alarm (\fPclass\fB Boolean)
+Specifies whether or not the alarm should be set on startup.  The
+default is \fIoff\fP.
+.TP 8
+.B bell (\fPclass\fB Boolean)
+Specifies whether or not a bell should be rung when the alarm goes off.
+The default is \fIoff\fP.
+.TP 8
+.B chime (\fPclass\fB Boolean)
+Specifies whether or not a bell should be rung on the hour and half hour.
+The default is \fIoff\fP.
+.TP 8
+.B hands (\fPclass\fB Foreground)
+Specifies the color of the insides of the clock's hands. The default 
+depends on whether
+\fIreverseVideo\fP is specified.  If \fIreverseVideo\fP is specified
+the default is \fIwhite\fP, otherwise the default is \fIblack\fP.
+.TP 8
+.B highlight (\fPclass\fB Foreground)
+Specifies the color used to highlight the clock's hands. The default
+depends on whether \fIreverseVideo\fP is specified.  
+If \fIreverseVideo\fP is specified
+the default is \fIwhite\fP, otherwise the default is \fIblack\fP.
+.TP 8
+.B catColor (\fPclass\fB Foreground)
+Specifies the color used for the cat's body.. The default
+depends on whether
+\fIreverseVideo\fP is specified.  If \fIreverseVideo\fP is specified
+the default is \fIwhite\fP, otherwise the default is \fIblack\fP.
+.TP 8
+.B detailColor (\fPclass\fB Foreground)
+Specifies the color used for the cat's belly, eyes, and paws. The default
+depends on whether
+\fIreverseVideo\fP is specified.  If \fIreverseVideo\fP is specified
+the default is \fIblack\fP, otherwise the default is \fIwhite\fP.
+.TP 8
+.B tieColor (\fPclass\fB Foreground)
+Specifies the color used for the cat's bow tie. The default
+depends on whether
+\fIreverseVideo\fP is specified.  If \fIreverseVideo\fP is specified
+the default is \fIblack\fP, otherwise the default is \fIwhite\fP.
+.TP 8
+.B update (\fPclass\fB Interval)
+Specifies the frequency in seconds at which the time should be redisplayed.
+.TP 8
+.B padding (\fPclass\fB Margin)
+Specifies the amount of internal padding in pixels to be used.  The default is
+\fI8\fP.
+.TP 8
+.B period (\fPclass\fB Interval)
+Specifies the period of the alarm bell. The default is \fI60\fP.
+.TP 8
+.B nTails (\fPclass\fB Cardinal)
+Specifies the number of tails per sweep.  The default is \fI16\fP.
+
+.SH MENU
+A popup menu is displayed when any mouse button is pressed and held
+within the
+.I xclock
+window.
+Selecting and releasing the button over the ``Alarm Set'', ``Alarm Bell''
+or ``Chime'' toggles their state.
+.PP
+The middle band of menu items are commands to perform (see ALARM FUNCTION
+below).
+The ``Exit'' menu item causes
+.I xclock
+to exit.
+.SH ALARM FUNCTION
+.I Xclock
+reads the alarm file to obtain the nearest alarm.
+The alarm file is consulted periodically to see if it has been changed and
+there is a more recent alarm, but to guarantee that the alarm file is read,
+use the menu item ``Reread Alarm File''.
+.PP
+To make changes to the alarm file, select menu item ``Edit Alarm File''.
+The editor specified by the EDITOR environment variable will be run
+on the alarm file.  The default editor is vi.  Emacs users who use GNU
+Emacs will have that editor appear in its own window, while "other"
+emacs versions will appear in an xterm window.
+
+
+.PP
+After an alarm has been rung, select either the ``Acknowledge Alarm''
+or the ``Reread Alarm File'' menu items.
+This will terminate the current alarm and cause the next alarm in sequence
+to be activated.
+.PP
+Each line in the file is an alarm composed of up to 4 fields.
+The first fields must be space separated, and the last field
+(the message field) must be separated from the previous fields with tabs.
+The first field is optional and gives the day of the week for the alarm
+to happen (no day of week means a daily alarm).
+.PP
+The next field is the time field and must contain a colon separating
+the hour from the minute.
+The third (optional) field may contain AM or PM (any case) specifying
+normal time.
+If no AM/PM indication is given, 24-hour time is assumed.
+.PP
+The final field is a message that is displayed when the alarm goes off.
+The text is scrolled from right to left within the
+.I xclock
+window.
+.SH EXAMPLES
+.ta 2i
+  Mon. 1:30 pm	Staff meeting
+  Thur. 15:30	Management meeting
+  11:55 am	Time for lunch
+.fi
+.sp
+.SH ENVIRONMENT
+.PP
+.TP 8
+.B DISPLAY
+to get the default host and display number.
+.TP 8
+.B EDITOR
+to specify the editor to use in modifying the alarm file.
+.SH "SEE ALSO"
+X(1), xrdb(1), time(3C)
+.SH BUGS
+.I Xclock
+believes the system clock.
+.SH COPYRIGHT
+Copyright 1988, Massachusetts Institute of Technology.
+.br
+See \fIX(1)\fP for a full statement of rights and permissions.
+.SH AUTHORS
+Tony Della Fera (MIT-Athena, DEC)
+.br
+Dave Mankins (MIT-Athena, BBN)
+.br
+Ed Moy (UC Berkeley)
+.br
+Deanna Hohn (DEC) created the cat pixmaps.
+.br
+Philip Schneider (DEC) created the pendulum tails and eyes, and ported
+the program to Motif 1.1.
+
+

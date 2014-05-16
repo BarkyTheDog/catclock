@@ -1,0 +1,85 @@
+
+				XCLOCK NOTES
+				------------
+
+Description
+-----------
+
+    This version of xclock is a Motif-based variant of the MIT xclock 
+program,  with an alarm feature, and a new "cat" mode, in addition to
+the analog and digital modes.
+
+History 
+--------
+
+    The code here started out as an X10 client program back in 1984.  Xclock 
+was originally written by Tony Della Fera of DEC, and "Hacked up by a cast of 
+thousands . . .".  The alarm feature was added sometime later by
+Ed Moy of Berkeley.  For X11, xclock was turned into an Xaw application
+by transferring most of the functionality to an xclock widget.  The
+alarm feature never made it back into the MIT sources.
+
+    The current incarnation of xclock is now a Motif 1.1.1 application, and
+has the new "cat" mode.  The cat image was based on the famous "Kit-Cat" (R)
+plastic wall clock, and was designed by Deanna Hohn of DEC Advanced Technology
+Development.  The Motif interface, eyes, tails, and the general state
+of the program now are a product of Philip Schneider of DEC.
+
+    Only God and a large number of lawyers could ever determine exactly
+who owns this code, what the copying restrictions might be, etc.  You're
+probably OK as long as the original copyright header remains intact, and
+you don't try to sell it or use it in any sort of a product.  The original
+code came from MIT, and so I expect that their ownership/copying restrictions
+apply.  Changes done by Deanna Hohn and Philip Schneider are free of
+any restrictions beyond those which may hold for the original sources.
+
+
+Compiling
+---------
+
+    On most systems,  just typing in the following should do what you want:
+
+	xmkmf <top-level X directory> .
+	make depend
+	make
+
+    A non-imake Makefile exists for those who might want/need it, called
+    Makefile.simple.
+
+    You may need/want to change the following things in the IMakefile :
+
+	MOTIFLIBS	--	locations of libXm.a and libXt.a
+	MOTIFINCS	--	include file directories
+	DESTINATION	--	where to install xclock
+        DEFINES         --	define HAS_GNU_EMACS if you use
+				GNU emacs; comment-out if you use
+				an emacs that must be executed in
+				an xterm window.
+
+    This program has been tested only on DEC Ultrix workstations.  It
+*should* be portable to any X/Unix/Motif-"compliant" system.  There
+may be some os-dependent stuff in the parts of the code that allow
+you to call up your editor on the alarm file, but this should be
+easily removable or fixable if need be.  
+
+
+Application Defaults / Command-line Options
+-------------------------------------------
+
+    Xclock (should :-) correctly parse all Xt arguments, and all the usual
+Xt resources (e.g., in one's .Xdefaults file) apply to xclock. (These are
+things like -display, -geometry, -reverse, etc.)  In addition, there are a 
+number of xclock-specific options, which are detailed in the man page
+"xclock.man".  A sample set of entries for one's ".Xdefaults" file are located
+in the file "xclock.ad".
+
+
+Bug Reports
+-----------
+
+    Please send bug reports, comments, etc. to :
+
+	Philip Schneider
+	pjs@pa.dec.com
+
+

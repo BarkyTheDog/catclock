@@ -1,0 +1,231 @@
+1 CATCLOCK
+analog / digital / cat clock for X
+
+SYNOPSIS
+
+  $ catclock [-toolkitoption ...] 
+             [-mode analog | digital | cat]
+             [-alarm] [-bell] [-chime] [-file filename] 
+             [-hd color] [-hl color] 
+             [-catcolor color] [-detailcolor color] [-tiecolor color]
+             [-update seconds] [-padding number]
+             [-period seconds] [-ntails number] [-help] 
+
+2 DESCRIPTION
+The catclock 
+program displays the time in analog, digital, or cat form.  
+The time is continuously updated at a frequency which may be specified 
+by the user.  
+
+2 OPTIONS
+Catclock
+accepts all of the standard X Toolkit command line options along with the 
+additional options listed below:
+
+    -mode  mode
+Determines display mode. Modes are analog, digital, and cat.  Analog mode
+displays a conventional 12 hour clock face with ``ticks''
+for each minute and stroke marks on each hour. Digital mode displays an
+ascii string corresponding to the time. Cat mode displays an image of
+the famous "Kit Cat (R)" plastic clock, complete with pendulum tail. 
+The default is analog.
+ 
+    -alarm 
+Turns the alarm on.
+If the alarm file exists and has valid alarm entries, a bell
+is displayed in the clock window.
+ 
+    -bell
+Turns the alarm bell on, sounding when an alarm is reached.
+ 
+    -chime
+This option indicates that the clock should chime 
+once on the half hour and twice on the hour.
+ 
+    -file alarmfile
+Specifies an alternate alarm file.
+The default is SYS$LOGIN:.Catclock.
+ 
+    -hd color
+This option specifies the color of the hands on an analog clock.  The default
+is black.
+ 
+    -hl color
+This option specifies the color of the edges of the hands on an analog clock,
+and is only useful on color displays.  The default is black.
+ 
+    -catcolor color
+For cat mode -- determines the color of the cat's body.
+The default color is black.
+ 
+    -detailcolor color
+For cat mode -- determines the color of the cat's face, paws, and belly.
+The default color is white.
+ 
+    -tiecolor color
+For cat mode -- determines the color of the cat's tie.
+The default color is white.
+ 
+    -update seconds
+This option specifies the frequency in seconds at which catclock
+should update its display.  If the clock is obscured and then exposed,
+it will be updated immediately.  A value of less than 30 seconds will enable a
+second hand on an analog clock.  The default is 60.
+ 
+    -padding number
+This option specifies the width in pixels of the padding 
+between the window border and clock text or picture.  The default is 10
+on a digital clock and 8 on an analog clock.
+ 
+    -period seconds
+Gives the period in seconds of the alarm bell (default is 60).
+ 
+    -ntails number
+In cat mode, determines the number of tails per ``sweep'', which 
+affects the smoothness of the swinging pendulum tail. The default
+is 16.
+ 
+    -help
+This option indicates that a brief summary of the allowed options should be
+printed on the standard error.
+
+2 X_DEFAULTS
+This program understands all of the usual Xt resources as well as the following:
+ 
+   mode (class String)
+Specifies the display mode -- analog, digital, or cat.  The
+default is analog.
+ 
+   alarm (class Boolean)
+Specifies whether or not the alarm should be set on startup.  The
+default is off.
+ 
+   bell (class Boolean)
+Specifies whether or not a bell should be rung when the alarm goes off.
+The default is off.
+ 
+   chime (class Boolean)
+Specifies whether or not a bell should be rung on the hour and half hour.
+The default is off.
+ 
+   hands (class Foreground)
+Specifies the color of the insides of the clock's hands. The default 
+depends on whether
+reverseVideo is specified.  If reverseVideo is specified
+the default is white, otherwise the default is black.
+ 
+   highlight (class Foreground)
+Specifies the color used to highlight the clock's hands. The default
+depends on whether reverseVideo is specified.  
+If reverseVideo is specified
+the default is white, otherwise the default is black.
+ 
+   catColor (class Foreground)
+Specifies the color used for the cat's body.. The default
+depends on whether
+reverseVideo is specified.  If reverseVideo is specified
+the default is white, otherwise the default is black.
+ 
+   detailColor (class Foreground)
+Specifies the color used for the cat's belly, eyes, and paws. The default
+depends on whether
+reverseVideo is specified.  If reverseVideo is specified
+the default is black, otherwise the default is white.
+ 
+   tieColor (class Foreground)
+Specifies the color used for the cat's bow tie. The default
+depends on whether
+reverseVideo is specified.  If reverseVideo is specified
+the default is black, otherwise the default is white.
+ 
+   update (class Interval)
+Specifies the frequency in seconds at which the time should be redisplayed.
+ 
+   padding (class Margin)
+Specifies the amount of internal padding in pixels to be used.  
+The default is 8.
+ 
+   period (class Interval)
+Specifies the period of the alarm bell. The default is 60.
+ 
+   nTails (class Cardinal)
+Specifies the number of tails per sweep.  The default is 16.
+
+2 MENU
+A popup menu is displayed when any mouse button is pressed and held
+within the catclock
+window.
+
+Selecting and releasing the button over the ``Alarm Set'', ``Alarm Bell''
+or ``Chime'' toggles their state.
+
+The middle band of menu items are commands to perform (see ALARM FUNCTION
+below).
+
+The ``Exit'' menu item causes catclockto exit.
+
+2 ALARM_FUNCTION
+Catclock
+reads the alarm file to obtain the nearest alarm.
+The alarm file is consulted periodically to see if it has been changed and
+there is a more recent alarm, but to guarantee that the alarm file is read,
+use the menu item ``Reread Alarm File''.
+
+To make changes to the alarm file, select menu item ``Edit Alarm File''.
+The editor specified by the EDITOR environment variable will be run
+on the alarm file.  The default editor is vi.  Emacs users who use GNU
+Emacs will have that editor appear in its own window, while "other"
+emacs versions will appear in an xterm window.
+
+
+After an alarm has been rung, select either the ``Acknowledge Alarm''
+or the ``Reread Alarm File'' menu items.
+This will terminate the current alarm and cause the next alarm in sequence
+to be activated.
+
+Each line in the file is an alarm composed of up to 4 fields.
+The first fields must be space separated, and the last field
+(the message field) must be separated from the previous fields with tabs.
+The first field is optional and gives the day of the week for the alarm
+to happen (no day of week means a daily alarm).
+
+The next field is the time field and must contain a colon separating
+the hour from the minute.
+The third (optional) field may contain AM or PM (any case) specifying
+normal time.
+If no AM/PM indication is given, 24-hour time is assumed.
+
+The final field is a message that is displayed when the alarm goes off.
+The text is scrolled from right to left within the catclock window.
+
+2 EXAMPLES
+
+  Mon. 1:30 pm	Staff meeting
+  Thur. 15:30	Management meeting
+  11:55 am	Time for lunch
+
+2 ENVIRONMENT
+ 
+   DISPLAY
+to get the default host and display number.
+ 
+   EDITOR
+to specify the editor to use in modifying the alarm file.
+
+2 BUGS
+Catclock believes the system clock.
+
+2 COPYRIGHT
+Copyright 1988, Massachusetts Institute of Technology.
+See X(1) for a full statement of rights and permissions.
+
+2 AUTHORS
+Tony Della Fera (MIT-Athena, DEC)
+Dave Mankins (MIT-Athena, BBN)
+Ed Moy (UC Berkeley)
+Deanna Hohn (DEC) created the cat pixmaps.
+Philip Schneider (DEC) created the pendulum tails and eyes, and ported
+the program to Motif 1.1.
+
+2 VMS_PORT
+Patrick Moreau (CENA/Athis-Mons, FRANCE) 
