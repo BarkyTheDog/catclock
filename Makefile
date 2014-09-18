@@ -51,7 +51,8 @@ lint:
 	lint $(INCS) $(SRCS) > lint_errs
 
 clean: 
-	rm -f *~ *.bak core *.o \#*\# $(PROG) $(DEBUG) lint_errs
+	rm -f *~ *.bak core *.o \#*\# $(PROG) $(DEBUG) lint_errs 
+	rm -rf xclock.dSYM
 
 depend:
 	$(DEPEND) $(INCS) $(SRCS)
