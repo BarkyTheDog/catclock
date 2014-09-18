@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		669D236D19CB77B700B9F836 /* libX11.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 669D236919CB77B700B9F836 /* libX11.a */; };
+		669D236E19CB77B700B9F836 /* libXext.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 669D236A19CB77B700B9F836 /* libXext.a */; };
+		669D236F19CB77B700B9F836 /* libXm.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 669D236B19CB77B700B9F836 /* libXm.a */; };
+		669D237019CB77B700B9F836 /* libXt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 669D236C19CB77B700B9F836 /* libXt.a */; };
 		66E7FEC619CB5B12003F41DA /* alarm.c in Sources */ = {isa = PBXBuildFile; fileRef = 66E7FEC319CB5B12003F41DA /* alarm.c */; };
 		66E7FEC719CB5B12003F41DA /* xclock.c in Sources */ = {isa = PBXBuildFile; fileRef = 66E7FEC519CB5B12003F41DA /* xclock.c */; };
-		66E7FECC19CB5BD5003F41DA /* libX11.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 66E7FEC819CB5BD5003F41DA /* libX11.6.dylib */; };
-		66E7FECD19CB5BD5003F41DA /* libXext.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 66E7FEC919CB5BD5003F41DA /* libXext.6.dylib */; };
-		66E7FECF19CB5BD5003F41DA /* libXt.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 66E7FECB19CB5BD5003F41DA /* libXt.6.dylib */; };
-		66E7FED119CB5C05003F41DA /* libXm.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 66E7FED019CB5C05003F41DA /* libXm.4.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,15 +28,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		669D236919CB77B700B9F836 /* libX11.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libX11.a; path = ../../../../../opt/local/lib/libX11.a; sourceTree = "<group>"; };
+		669D236A19CB77B700B9F836 /* libXext.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libXext.a; path = ../../../../../opt/local/lib/libXext.a; sourceTree = "<group>"; };
+		669D236B19CB77B700B9F836 /* libXm.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libXm.a; path = ../../../../../opt/local/lib/libXm.a; sourceTree = "<group>"; };
+		669D236C19CB77B700B9F836 /* libXt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libXt.a; path = ../../../../../opt/local/lib/libXt.a; sourceTree = "<group>"; };
 		66E7FEB219CB5ABC003F41DA /* catclock */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = catclock; sourceTree = BUILT_PRODUCTS_DIR; };
 		66E7FEC319CB5B12003F41DA /* alarm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = alarm.c; sourceTree = "<group>"; };
 		66E7FEC419CB5B12003F41DA /* alarm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = alarm.h; sourceTree = "<group>"; };
 		66E7FEC519CB5B12003F41DA /* xclock.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xclock.c; sourceTree = "<group>"; };
-		66E7FEC819CB5BD5003F41DA /* libX11.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libX11.6.dylib; path = /opt/local/lib/libX11.6.dylib; sourceTree = "<absolute>"; };
-		66E7FEC919CB5BD5003F41DA /* libXext.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXext.6.dylib; path = /opt/local/lib/libXext.6.dylib; sourceTree = "<absolute>"; };
-		66E7FECA19CB5BD5003F41DA /* libXmu.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXmu.6.dylib; path = /opt/local/lib/libXmu.6.dylib; sourceTree = "<absolute>"; };
-		66E7FECB19CB5BD5003F41DA /* libXt.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXt.6.dylib; path = /opt/local/lib/libXt.6.dylib; sourceTree = "<absolute>"; };
-		66E7FED019CB5C05003F41DA /* libXm.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXm.4.dylib; path = /opt/local/lib/libXm.4.dylib; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,10 +43,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66E7FED119CB5C05003F41DA /* libXm.4.dylib in Frameworks */,
-				66E7FECC19CB5BD5003F41DA /* libX11.6.dylib in Frameworks */,
-				66E7FECD19CB5BD5003F41DA /* libXext.6.dylib in Frameworks */,
-				66E7FECF19CB5BD5003F41DA /* libXt.6.dylib in Frameworks */,
+				669D236D19CB77B700B9F836 /* libX11.a in Frameworks */,
+				669D236E19CB77B700B9F836 /* libXext.a in Frameworks */,
+				669D236F19CB77B700B9F836 /* libXm.a in Frameworks */,
+				669D237019CB77B700B9F836 /* libXt.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,11 +56,6 @@
 		66632E5C19CB5CFB0053A636 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				66E7FED019CB5C05003F41DA /* libXm.4.dylib */,
-				66E7FEC819CB5BD5003F41DA /* libX11.6.dylib */,
-				66E7FEC919CB5BD5003F41DA /* libXext.6.dylib */,
-				66E7FECA19CB5BD5003F41DA /* libXmu.6.dylib */,
-				66E7FECB19CB5BD5003F41DA /* libXt.6.dylib */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -79,6 +73,10 @@
 		66E7FEA919CB5ABC003F41DA = {
 			isa = PBXGroup;
 			children = (
+				669D236919CB77B700B9F836 /* libX11.a */,
+				669D236A19CB77B700B9F836 /* libXext.a */,
+				669D236B19CB77B700B9F836 /* libXm.a */,
+				669D236C19CB77B700B9F836 /* libXt.a */,
 				66632E5E19CB5D1A0053A636 /* Sources */,
 				66632E5C19CB5CFB0053A636 /* Libraries */,
 				66E7FEB319CB5ABC003F41DA /* Products */,
