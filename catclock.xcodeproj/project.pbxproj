@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		666132331BC06D340091BAB4 /* alarm.c in Sources */ = {isa = PBXBuildFile; fileRef = 666132311BC06D340091BAB4 /* alarm.c */; settings = {ASSET_TAGS = (); }; };
-		666132341BC06D340091BAB4 /* xclock.c in Sources */ = {isa = PBXBuildFile; fileRef = 666132321BC06D340091BAB4 /* xclock.c */; settings = {ASSET_TAGS = (); }; };
-		666132431BC06E480091BAB4 /* libX11.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 666132401BC06E480091BAB4 /* libX11.a */; settings = {ASSET_TAGS = (); }; };
-		666132441BC06E480091BAB4 /* libXext.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 666132411BC06E480091BAB4 /* libXext.a */; settings = {ASSET_TAGS = (); }; };
-		666132451BC06E480091BAB4 /* libXm.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 666132421BC06E480091BAB4 /* libXm.a */; settings = {ASSET_TAGS = (); }; };
-		666132471BC06E650091BAB4 /* libXt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 666132461BC06E650091BAB4 /* libXt.a */; settings = {ASSET_TAGS = (); }; };
+		666132331BC06D340091BAB4 /* alarm.c in Sources */ = {isa = PBXBuildFile; fileRef = 666132311BC06D340091BAB4 /* alarm.c */; };
+		666132341BC06D340091BAB4 /* xclock.c in Sources */ = {isa = PBXBuildFile; fileRef = 666132321BC06D340091BAB4 /* xclock.c */; };
+		666132431BC06E480091BAB4 /* libX11.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 666132401BC06E480091BAB4 /* libX11.a */; };
+		666132441BC06E480091BAB4 /* libXext.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 666132411BC06E480091BAB4 /* libXext.a */; };
+		666132451BC06E480091BAB4 /* libXm.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 666132421BC06E480091BAB4 /* libXm.a */; };
+		666132471BC06E650091BAB4 /* libXt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 666132461BC06E650091BAB4 /* libXt.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -295,24 +295,30 @@
 		6661322D1BC06CD80091BAB4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				HEADER_SEARCH_PATHS = /opt/local/include;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/opt/local/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = /usr/include;
+				USE_HEADERMAP = NO;
 			};
 			name = Debug;
 		};
 		6661322E1BC06CD80091BAB4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				HEADER_SEARCH_PATHS = /opt/local/include;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/opt/local/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = /usr/include;
+				USE_HEADERMAP = NO;
 			};
 			name = Release;
 		};
