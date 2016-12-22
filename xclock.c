@@ -262,15 +262,15 @@ static void ExitCallback(Widget, XtPointer, XtPointer);
 static void MapCallback(Widget, XtPointer, XEvent *, Boolean *);
 static void SetSeg(int, int, int, int);
 
-main(argc, argv)
+int main(argc, argv)
     int         argc;
     char        *argv[];
 {
     int         n;
     Arg         args[10];
     Widget      topLevel, form, canvas;
-    int         stringWidth,
-                stringAscent, stringDescent;
+    int         stringWidth = 0,
+                stringAscent = 0, stringDescent = 0;
     XGCValues   gcv;
     u_long      valueMask;
     XmFontList  fontList = (XmFontList)NULL;
@@ -392,7 +392,7 @@ main(argc, argv)
     topLevel = XtAppInitialize(&appContext, "Catclock",
                                (XrmOptionDescList)(&options[0]),
                                XtNumber(options),
-                               (unsigned int *)&argc, argv, NULL,
+                               &argc, argv, NULL,
                                NULL, 0);
     /*
      *  Get resources . . .
@@ -440,7 +440,7 @@ main(argc, argv)
     {
         Pixmap   iconPixmap;
         char    *data;
-        u_int    width, height;
+        u_int    width = 0, height = 0;
     
         switch (clockMode) {
             case ANALOG_CLOCK : {
@@ -571,10 +571,10 @@ main(argc, argv)
             timePtr = ctime(&timeValue);
             DigitalString(timePtr);
 
-            XTextExtents(appData.font, timePtr, strlen(timePtr),
+            XTextExtents(appData.font, timePtr, (int)strlen(timePtr),
                          &stringDir, &stringAscent, &stringDescent, &xCharStr);
 
-            stringWidth = XTextWidth(appData.font, timePtr, strlen(timePtr));
+            stringWidth = XTextWidth(appData.font, timePtr, (int)strlen(timePtr));
         
             break;
         }
@@ -732,9 +732,9 @@ main(argc, argv)
         struct passwd *pw;
         char           *getenv();
     
-        if (cp = getenv("HOME")) {
+        if ((cp = getenv("HOME"))) {
             strcpy(alarmBuf, cp);
-        } else if (pw = getpwuid(getuid())) {
+        } else if ((pw = getpwuid(getuid()))) {
             strcpy(alarmBuf, pw->pw_dir);
         } else {
             *alarmBuf = 0;
@@ -776,6 +776,8 @@ main(argc, argv)
      *  Start processing events
      */
     XtAppMainLoop(appContext);
+
+    return 0;
 }
 
 static void ParseGeometry(topLevel, stringWidth, stringAscent, stringDescent)
@@ -796,8 +798,14 @@ static void ParseGeometry(topLevel, stringWidth, stringAscent, stringDescent)
     XtSetArg(args[n], XmNgeometry, &geomString);    n++;
     XtGetValues(topLevel, args, n);
 
+    /*
+     * Static analysis tags this as a memory leak...
+     * Must be dynamically allocated; otherwise, the geom string
+     * would be out of scope by the time XtRealizeWidget is called,
+     * and you would get a garbage geometry specification, at best.
+     */
     geometry = malloc(80);
-    
+
     switch (clockMode) {
         case ANALOG_CLOCK : {
             if (geomString == NULL) {
@@ -811,7 +819,8 @@ static void ParseGeometry(topLevel, stringWidth, stringAscent, stringDescent)
                 /*
                  *  Gotta do some work.
                  */
-                int x, y, width, height;
+                int x, y;
+                unsigned int width, height;
                 int geomMask;
         
                 /*
@@ -930,8 +939,9 @@ static void ParseGeometry(topLevel, stringWidth, stringAscent, stringDescent)
                 /*
                  *  Gotta do some work.
                  */
-                int    x, y, width, height;
-                int     geomMask;
+                int          x, y;
+                unsigned int width, height;
+                int          geomMask;
         
                 /*
                  *  Find out what's been set
@@ -1051,8 +1061,9 @@ static void ParseGeometry(topLevel, stringWidth, stringAscent, stringDescent)
                 /*
                  *  Gotta do some work.
                  */
-                int     x, y, width, height;
-                int     geomMask;
+                int          x, y;
+                unsigned int width, height;
+                int          geomMask;
         
                 /*
                  *  Find out what's been set
@@ -1109,12 +1120,12 @@ static void ParseGeometry(topLevel, stringWidth, stringAscent, stringDescent)
              */
             n = 0;
             XtSetArg(args[n], XmNwidth,     DEF_CAT_WIDTH);    n++;
-            XtSetArg(args[n], XmNheight,    DEF_CAT_HEIGHT);    n++;
+            XtSetArg(args[n], XmNheight,    DEF_CAT_HEIGHT);   n++;
             XtSetArg(args[n], XmNminWidth,  DEF_CAT_WIDTH);    n++;
-            XtSetArg(args[n], XmNminHeight, DEF_CAT_HEIGHT);    n++;
+            XtSetArg(args[n], XmNminHeight, DEF_CAT_HEIGHT);   n++;
             XtSetArg(args[n], XmNmaxWidth,  DEF_CAT_WIDTH);    n++;
-            XtSetArg(args[n], XmNmaxHeight, DEF_CAT_HEIGHT);    n++;
-            XtSetArg(args[n], XmNgeometry,  geometry);        n++;    
+            XtSetArg(args[n], XmNmaxHeight, DEF_CAT_HEIGHT);   n++;
+            XtSetArg(args[n], XmNgeometry,  geometry);         n++;
             XtSetValues(topLevel, args, n);
         
             break;
@@ -1371,7 +1382,7 @@ static void DigitalString(str)
     if (noSeconds) {
         str += 16;
         cp = str + 3;
-        while (*str++ = *cp++);
+        while ((*str++ = *cp++));
     }
 }
 
@@ -2063,7 +2074,7 @@ static void Tick(w, add)
             DigitalString(timePtr);
             XDrawImageString(dpy, clockWindow, gc,
                              digitalX, digitalY,
-                             timePtr, strlen(timePtr));
+                             timePtr, (int)strlen(timePtr));
             break;
         }
     }
@@ -2168,7 +2179,7 @@ static void AlarmSetCallback(w, clientData, callData)
     XtPointer  clientData;
     XtPointer  callData;
 {
-    if (appData.alarmSet = appData.alarmSet ? False : True) {
+    if ((appData.alarmSet = appData.alarmSet ? False : True)) {
         SetAlarm(appData.alarmFile);
     } else {
         if (alarmOn) {
@@ -2344,11 +2355,11 @@ static void HandleResize(w, clientData, callData)
             timePtr = ctime(&timeValue);
             DigitalString(timePtr);
 
-            XTextExtents(appData.font, timePtr, strlen(timePtr),
+            XTextExtents(appData.font, timePtr, (int)strlen(timePtr),
                          &stringDir, &ascent, &descent, &xCharStr);
         
             stringHeight = ascent + descent;
-            stringWidth = XTextWidth(appData.font, timePtr, strlen(timePtr));
+            stringWidth = XTextWidth(appData.font, timePtr, (int)strlen(timePtr));
         
             GetBellSize(&bellWidth, &bellHeight);
         

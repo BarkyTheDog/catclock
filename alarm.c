@@ -59,9 +59,6 @@ static int          alarmWidth;
 static int          alarmX;
 static int          alarmY;
 
-static int          foreground;
-static int          background;
-
 static Boolean      bellFlash;
 
 static int          bellX;
@@ -104,9 +101,6 @@ void InitBellAlarm(win, width, height, fontInfo, fontList, fg, bg, state, on)
 
     alarmFontInfo = fontInfo;
     alarmWidth = width - alarmX;
-
-    foreground = fg;
-    background = bg;
 
     alarmLen = (alarmWidth + (fontInfo->max_bounds.width - 1)) /
                    fontInfo->max_bounds.width;
@@ -166,7 +160,7 @@ void AlarmAnnounce()
     
     strcpy(buf, nextAlarm.alarmAnnounce ? nextAlarm.alarmAnnounce : "alarm");
     strcat(buf, " ... ");
-    alarmBufLen = strlen(buf);
+    alarmBufLen = (int)strlen(buf);
 
     w = XTextWidth(alarmFontInfo, buf, alarmBufLen);
 
@@ -364,7 +358,7 @@ void ReadAlarmFile(file)
             tp++;
         }
 
-        if (cp = index(tp, '\n')) {
+        if ((cp = index(tp, '\n'))) {
             *cp = 0;
         }
 
@@ -376,7 +370,7 @@ void ReadAlarmFile(file)
             continue;
         }
 
-        if (nextAlarm.alarmAnnounce = malloc(strlen(tp) + 1)) {
+        if ((nextAlarm.alarmAnnounce = malloc(strlen(tp) + 1))) {
             strcpy(nextAlarm.alarmAnnounce, tp);
         }
     }
