@@ -66,13 +66,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		661F38D11FF5859A00B157C9 /* catclock */ = {
+			isa = PBXGroup;
+			children = (
+				666132311BC06D340091BAB4 /* alarm.c */,
+				6661322F1BC06D340091BAB4 /* alarm.h */,
+				666132301BC06D340091BAB4 /* patchlevel.h */,
+				666132321BC06D340091BAB4 /* xclock.c */,
+			);
+			name = catclock;
+			sourceTree = "<group>";
+		};
 		6661321C1BC06CD80091BAB4 = {
 			isa = PBXGroup;
 			children = (
 				666132481BC06E920091BAB4 /* Alarm File */,
 				6661324D1BC06EDA0091BAB4 /* Application Defaults */,
 				666132351BC06D3B0091BAB4 /* Bitmaps */,
-				666132271BC06CD80091BAB4 /* catclock */,
+				661F38D11FF5859A00B157C9 /* catclock */,
 				6661323F1BC06DF80091BAB4 /* Libraries */,
 				6661324A1BC06EBF0091BAB4 /* Man Page */,
 				666132261BC06CD80091BAB4 /* Products */,
@@ -85,17 +96,6 @@
 				666132251BC06CD80091BAB4 /* catclock */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		666132271BC06CD80091BAB4 /* catclock */ = {
-			isa = PBXGroup;
-			children = (
-				666132311BC06D340091BAB4 /* alarm.c */,
-				6661322F1BC06D340091BAB4 /* alarm.h */,
-				666132301BC06D340091BAB4 /* patchlevel.h */,
-				666132321BC06D340091BAB4 /* xclock.c */,
-			);
-			path = catclock;
 			sourceTree = "<group>";
 		};
 		666132351BC06D3B0091BAB4 /* Bitmaps */ = {
