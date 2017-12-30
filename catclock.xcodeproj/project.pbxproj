@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		666132331BC06D340091BAB4 /* alarm.c in Sources */ = {isa = PBXBuildFile; fileRef = 666132311BC06D340091BAB4 /* alarm.c */; };
-		666132341BC06D340091BAB4 /* xclock.c in Sources */ = {isa = PBXBuildFile; fileRef = 666132321BC06D340091BAB4 /* xclock.c */; };
+		666132331BC06D340091BAB4 /* alarm.c in Sources */ = {isa = PBXBuildFile; fileRef = 666132311BC06D340091BAB4 /* alarm.c */; settings = {COMPILER_FLAGS = "-Wno-nullability-completeness"; }; };
+		666132341BC06D340091BAB4 /* xclock.c in Sources */ = {isa = PBXBuildFile; fileRef = 666132321BC06D340091BAB4 /* xclock.c */; settings = {COMPILER_FLAGS = "-Wno-nullability-completeness"; }; };
 		666132431BC06E480091BAB4 /* libX11.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 666132401BC06E480091BAB4 /* libX11.a */; };
 		666132441BC06E480091BAB4 /* libXext.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 666132411BC06E480091BAB4 /* libXext.a */; };
 		666132451BC06E480091BAB4 /* libXm.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 666132421BC06E480091BAB4 /* libXm.a */; };
