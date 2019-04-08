@@ -730,8 +730,7 @@ int main(argc, argv)
     if (!appData.alarmFile) {
         char          *cp;
         struct passwd *pw;
-        char           *getenv();
-    
+
         if ((cp = getenv("HOME"))) {
             strcpy(alarmBuf, cp);
         } else if ((pw = getpwuid(getuid()))) {
@@ -2255,7 +2254,6 @@ static void EditAlarmCallback(w, clientData, callData)
 {
     Widget       setW = (Widget)clientData;
 
-    extern char *getenv();
     char        *editor;
     char         cmdString[80];
 
