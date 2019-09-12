@@ -5,3 +5,4 @@ build
 DerivedData
 xclock
 tags
+compile_commands.json
