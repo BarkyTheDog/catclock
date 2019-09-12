@@ -255,7 +255,7 @@ static Boolean  iconified      = False;    /*  Clock iconified?         */
 
 #if WITH_TEMPO_TRACKER
 static float phase = 0.5;
-static float bpm = 120.0;
+static float bpm = 60.0;
 Boolean last_time_initialized = True;
 struct timeval last_time;
 #endif
@@ -853,7 +853,7 @@ static void *TempoTrackerThread() {
     last_time = now;
 
     // Phase
-    float speed = bpm / 60.0 * 0.5;
+    float speed = bpm / 60.0;
 
     if ((phase > 0.45 && phase < 0.55) && is_beat) {
       phase = 0.5;
