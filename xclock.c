@@ -1653,7 +1653,7 @@ static void UpdateEyesAndTail()
       if (time_delta.tv_usec > 30000) {
         // Seems like PulseAudio is sleeping
         // We will move phase ourself
-        float speed = bpm / 60.0;
+        float speed = bpm / 60.0 * 0.5;
         phase += ((float)time_delta.tv_usec * 0.000001) * speed * direction;
         if (direction == 1 && phase >= 1.0) {
           phase = 1.0;
