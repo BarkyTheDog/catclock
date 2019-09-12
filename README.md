@@ -10,15 +10,24 @@ In addition to the cat mode, this version of xclock includes an alarm feature an
 ## Tempo Tracking
 
 This version is able to track the music tempo and move cat eyes and tail in sync with music.
-To build it with tempo tracking enabled use the `WITH_TEMPO_TRACKER=1` option:
+To build it with tempo tracking enabled you will need an additional library which powers the tempo tracking:
+
+```bash
+sudo apt install libaubio5 libaubio-dev
+```
+
+Use the `WITH_TEMPO_TRACKER=1` option to compile with tempo tracker enabled:
 
 ```bash
 make WITH_TEMPO_TRACKER=1
 ```
 
-After running clock in "cat" mode run some PulseAudio mixer (for example - `pavucontrol`) and select desired audio source for analysis.
+After running clock in "cat" mode run some PulseAudio mixer (for example - `pavucontrol`) and select desired audio source for analysis on the "Recording" tab.
 
-Usage: xclock [toolkitoptions]
+## Usage
+
+```
+xclock [toolkitoptions]
        [-mode <analog, digital, cat>]
        [-alarm]  [-bell]  [-chime]
        [-file <alarm file>]  [-period <seconds>]
@@ -30,5 +39,6 @@ Usage: xclock [toolkitoptions]
        [-update <seconds>]
        [-ntails <number>]
        [-help]
+```
 
 Enjoy!
