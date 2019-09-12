@@ -258,6 +258,7 @@ static float phase = 0.5;
 static float bpm = 60.0;
 Boolean last_time_initialized = True;
 struct timeval last_time;
+static int direction = 1;
 #endif
 
 static void ParseGeometry(Widget, int, int, int);
@@ -814,7 +815,6 @@ int main(argc, argv)
 
 #if WITH_TEMPO_TRACKER
 static void *TempoTrackerThread() {
-  static int direction = 1;
   static const pa_sample_spec ss = {
     .format = PA_SAMPLE_FLOAT32,
     .rate = SAMPLERATE,
@@ -1621,6 +1621,27 @@ static void UpdateEyesAndTail()
      *  Figure out which tail & eyes are next
      */
 #if WITH_TEMPO_TRACKER
+    // Time delta
+    struct timeval now;
+    gettimeofday(&now, NULL);
+    if (last_time_initialized) {
+      struct timeval time_delta;
+      timersub(&now, &last_time, &time_delta);
+      if (time_delta.tv_usec > 30000) {
+        // Seems like PulseAudio is sleeping
+        // We will move phase ourself
+        float speed = bpm / 60.0;
+        phase += ((float)time_delta.tv_usec * 0.000001) * speed * direction;
+        if (direction == 1 && phase >= 1.0) {
+          phase = 1.0;
+          direction = -1;
+        } else if (direction == -1 && phase < 0.0) {
+          phase = 0.0;
+          direction = 1;
+        }
+        last_time = now;
+      }
+    }
     curTail = (int) (phase * appData.nTails);
 #else
     if (curTail == 0 && tailDir == -1) {
