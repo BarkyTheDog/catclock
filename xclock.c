@@ -77,8 +77,8 @@
 #include <pulse/simple.h>
 #include <pulse/error.h>
 #include <aubio/aubio.h>
-#define BUFSIZE 1024
-#define HOPSIZE 1024
+#define BUFSIZE 256
+#define HOPSIZE 256
 #define SAMPLERATE 44100
 #endif
 
@@ -256,6 +256,7 @@ static Boolean  iconified      = False;    /*  Clock iconified?         */
 #if WITH_TEMPO_TRACKER
 static float phase = 0.5;
 static float bpm = 60.0;
+static float correction = 0.0;
 Boolean last_time_initialized = True;
 struct timeval last_time;
 static int direction = 1;
@@ -837,7 +838,7 @@ static void *TempoTrackerThread() {
     aubio_tempo_do(tempo, aubio_buf, tempo_out);
     float confidence = aubio_tempo_get_confidence(tempo);
     Boolean is_beat = tempo_out->data[0] != 0.0;
-    if (confidence >= 0.1) {
+    if (confidence > 0.1) {
       bpm = aubio_tempo_get_bpm(tempo);
     }
 
@@ -852,20 +853,42 @@ static void *TempoTrackerThread() {
     timersub(&now, &last_time, &time_delta);
     last_time = now;
 
-    // Phase
-    float speed = bpm / 60.0;
+    // Speed correction
+    //
+    // We want beat to hit at 0.0, 0.5 or "1.0"
+    // so we trying to detect if it was too late this time
+    // and attenuate the speed to make animation sync
+    // with the beat better when it occur next time.
 
-    if ((phase > 0.45 && phase < 0.55) && is_beat) {
-      phase = 0.5;
-    } else {
-      phase += ((float)time_delta.tv_usec * 0.000001) * speed * direction;
-      if (direction == 1 && phase >= 1.0) {
-        phase = 1.0;
-        direction = -1;
-      } else if (direction == -1 && phase < 0.0) {
-        phase = 0.0;
-        direction = 1;
+    if (confidence > 0.1) {
+      if (is_beat) {
+        float phase_delta = 0;
+        if (phase < 0.25) {
+          phase_delta = phase - 0.0;
+        } else if (phase > 0.25 && phase < 0.75) {
+          phase_delta = phase - 0.5;
+        } else if (phase > 0.75) {
+          phase_delta = phase - 1.0;
+        }
+        correction = phase_delta * -direction;
       }
+    }
+
+    float time_delta_s = ((float)time_delta.tv_usec * 0.000001);
+
+    float correction_amplification = 20.0;
+
+    float speed = bpm / 60.0 * 0.5 + (correction * correction_amplification * time_delta_s);
+
+    // Move phase
+
+    phase += time_delta_s * speed * direction;
+    if (direction == 1 && phase >= 1.0) {
+      phase = 1.0;
+      direction = -1;
+    } else if (direction == -1 && phase < 0.0) {
+      phase = 0.0;
+      direction = 1;
     }
   }
   pthread_exit(NULL);
