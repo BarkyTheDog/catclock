@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="catclock.gif">
+</p>
+
 catclock
 ========
 
