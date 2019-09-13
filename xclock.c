@@ -255,7 +255,7 @@ static Boolean  iconified      = False;    /*  Clock iconified?         */
 
 #if WITH_TEMPO_TRACKER
 static float phase = 0.5;
-static float bpm = 60.0;
+static float bpm = 120.0;
 static float correction = 0.0;
 Boolean last_time_initialized = True;
 struct timeval last_time;
