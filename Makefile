@@ -7,6 +7,8 @@
 SRCS = xclock.c alarm.c
 OBJS = xclock.o alarm.o
 
+WITH_TEMPO_TRACKER ?= 0
+
 XLIB      = -lX11
 MOTIFLIBS = -lXm -lXt
 EXTENSIONLIB = -lXext
