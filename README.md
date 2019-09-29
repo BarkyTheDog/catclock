@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="catclock.gif">
+</p>
+
 catclock
 ========
 
@@ -7,7 +11,27 @@ Since the time of our enhancements, the code has been changed very little, prima
 
 In addition to the cat mode, this version of xclock includes an alarm feature and an hourly chime (see the man page for details). Various X defaults and command-line switches can be used to control the colors for the cat. You may have to modify the Makefile's header and library paths for your machine's X configuration. The only "nonstandard" dependency is on Motif, which is easily obtainable from your favorite package manager.
 
-Usage: xclock [toolkitoptions]
+## Tempo Tracking
+
+This version is able to track the music tempo and move cat eyes and tail in sync with music.
+To build it with tempo tracking enabled you will need an additional library which powers the tempo tracking:
+
+```bash
+sudo apt install libaubio5 libaubio-dev
+```
+
+Use the `WITH_TEMPO_TRACKER=1` option to compile with tempo tracker enabled:
+
+```bash
+make WITH_TEMPO_TRACKER=1
+```
+
+After running clock in "cat" mode run some PulseAudio mixer (for example - `pavucontrol`) and select desired audio source for analysis on the "Recording" tab.
+
+## Usage
+
+```
+xclock [toolkitoptions]
        [-mode <analog, digital, cat>]
        [-alarm]  [-bell]  [-chime]
        [-file <alarm file>]  [-period <seconds>]
@@ -19,5 +43,6 @@ Usage: xclock [toolkitoptions]
        [-update <seconds>]
        [-ntails <number>]
        [-help]
+```
 
 Enjoy!

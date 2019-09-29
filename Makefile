@@ -7,11 +7,16 @@
 SRCS = xclock.c alarm.c
 OBJS = xclock.o alarm.o
 
+WITH_TEMPO_TRACKER ?= 0
+
 XLIB      = -lX11
 MOTIFLIBS = -lXm -lXt
 EXTENSIONLIB = -lXext
 SYSLIBS   = -lm
 LIBS      = -L/opt/local/lib $(MOTIFLIBS) $(EXTENSIONLIB) $(XLIB) $(SYSLIBS)
+ifeq ($(WITH_TEMPO_TRACKER), 1)
+	LIBS += -lpulse -lpulse-simple -lpthread -laubio
+endif
 #LIBS      = $(MOTIFLIBS) $(EXTENSIONLIB) $(XLIB) $(SYSLIBS)
 
 LOCALINCS = -I.
@@ -38,7 +43,7 @@ DEPEND = makedepend
 all: $(PROG)
 
 $(PROG): $(SRCS) Makefile
-	$(CC) -o $(PROG) $(CFLAGS) $(SRCS) $(LIBS)
+	$(CC) -o $(PROG) -DWITH_TEMPO_TRACKER=$(WITH_TEMPO_TRACKER) $(CFLAGS) $(SRCS) $(LIBS)
 	strip $(PROG)
 
 $(DEBUG): $(OBJS) Makefile

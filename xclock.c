@@ -69,6 +69,20 @@
 #include "patchlevel.h"
 
 /*
+ *  Tempo tracker dependencies
+ */
+#if WITH_TEMPO_TRACKER
+#include <sys/time.h>
+#include <pthread.h>
+#include <pulse/simple.h>
+#include <pulse/error.h>
+#include <aubio/aubio.h>
+#define BUFSIZE 256
+#define HOPSIZE 256
+#define SAMPLERATE 44100
+#endif
+
+/*
  *  Clock Mode -- type of clock displayed
  */
 #define ANALOG_CLOCK    0               /*  Ye olde X10 xclock face     */
@@ -238,6 +252,16 @@ static Boolean  showSecondHand = False;    /*  Display second hand?     */
 
 static Boolean  iconified      = False;    /*  Clock iconified?         */
 
+
+#if WITH_TEMPO_TRACKER
+static float phase = 0.5;
+static float bpm = 120.0;
+static float correction = 0.0;
+Boolean last_time_initialized = True;
+struct timeval last_time;
+static int direction = 1;
+#endif
+
 static void ParseGeometry(Widget, int, int, int);
 static int Round(double);
 static void DigitalString(char *);
@@ -261,6 +285,9 @@ static void EditAlarmCallback(Widget, XtPointer, XtPointer);
 static void ExitCallback(Widget, XtPointer, XtPointer);
 static void MapCallback(Widget, XtPointer, XEvent *, Boolean *);
 static void SetSeg(int, int, int, int);
+#if WITH_TEMPO_TRACKER
+static void *TempoTrackerThread();
+#endif
 
 int main(argc, argv)
     int         argc;
@@ -525,8 +552,8 @@ int main(argc, argv)
             if (appData.nTails < 1) {
                 appData.nTails = 1;
             }
-            if (appData.nTails > 36) {
-                appData.nTails = 36;
+            if (appData.nTails > 60) {
+                appData.nTails = 60;
             }
         
             /*
@@ -771,6 +798,14 @@ int main(argc, argv)
         XtAddCallback(canvas, XmNinputCallback,  HandleInput,  NULL);
     }
 
+#if WITH_TEMPO_TRACKER
+    if (clockMode == CAT_CLOCK) {
+      pthread_t thread;
+      void *arg;
+      pthread_create(&thread, NULL, TempoTrackerThread, arg);
+    }
+#endif
+
     /*
      *  Start processing events
      */
@@ -778,6 +813,87 @@ int main(argc, argv)
 
     return 0;
 }
+
+#if WITH_TEMPO_TRACKER
+static void *TempoTrackerThread() {
+  static const pa_sample_spec ss = {
+    .format = PA_SAMPLE_FLOAT32,
+    .rate = SAMPLERATE,
+    .channels = 1
+  };
+  pa_simple *s = NULL;
+  int error;
+  if (!(s = pa_simple_new(NULL, "Cat Clock", PA_STREAM_RECORD, NULL, "record", &ss, NULL, NULL, &error))) {
+    fprintf(stderr, __FILE__": pa_simple_new() failed: %s\n", pa_strerror(error));
+    pthread_exit(NULL);
+  }
+
+  aubio_tempo_t *tempo = new_aubio_tempo("default", BUFSIZE, HOPSIZE, SAMPLERATE);
+  fvec_t *tempo_out = new_fvec(2);
+  for (;;) {
+    float buf[BUFSIZE];
+    pa_simple_read(s, buf, sizeof(buf), &error);
+    fvec_t *aubio_buf = new_fvec(BUFSIZE);
+    aubio_buf->data = buf;
+    aubio_tempo_do(tempo, aubio_buf, tempo_out);
+    float confidence = aubio_tempo_get_confidence(tempo);
+    Boolean is_beat = tempo_out->data[0] != 0.0;
+    if (confidence > 0.1) {
+      bpm = aubio_tempo_get_bpm(tempo);
+    }
+
+    // Time delta
+    struct timeval now;
+    gettimeofday(&now, NULL);
+    if (!last_time_initialized) {
+      last_time = now;
+      last_time_initialized = True;
+    }
+    struct timeval time_delta;
+    timersub(&now, &last_time, &time_delta);
+    last_time = now;
+
+    // Speed correction
+    //
+    // We want beat to hit at 0.0, 0.5 or "1.0"
+    // so we trying to detect if it was too late this time
+    // and attenuate the speed to make animation sync
+    // with the beat better when it occur next time.
+
+    if (confidence > 0.1) {
+      if (is_beat) {
+        float phase_delta = 0;
+        if (phase < 0.25) {
+          phase_delta = phase - 0.0;
+        } else if (phase > 0.25 && phase < 0.75) {
+          phase_delta = phase - 0.5;
+        } else if (phase > 0.75) {
+          phase_delta = phase - 1.0;
+        }
+        correction = phase_delta * -direction;
+      }
+    }
+
+    float time_delta_s = ((float)time_delta.tv_usec * 0.000001);
+
+    float correction_amplification = 20.0;
+
+    float speed = bpm / 60.0 * 0.5 + (correction * correction_amplification * time_delta_s);
+
+    // Move phase
+
+    phase += time_delta_s * speed * direction;
+    if (direction == 1 && phase >= 1.0) {
+      phase = 1.0;
+      direction = -1;
+    } else if (direction == -1 && phase < 0.0) {
+      phase = 0.0;
+      direction = 1;
+    }
+  }
+  pthread_exit(NULL);
+}
+#endif
 
 static void ParseGeometry(topLevel, stringWidth, stringAscent, stringDescent)
     Widget      topLevel;
@@ -1527,6 +1643,30 @@ static void UpdateEyesAndTail()
     /*
      *  Figure out which tail & eyes are next
      */
+#if WITH_TEMPO_TRACKER
+    // Time delta
+    struct timeval now;
+    gettimeofday(&now, NULL);
+    if (last_time_initialized) {
+      struct timeval time_delta;
+      timersub(&now, &last_time, &time_delta);
+      if (time_delta.tv_usec > 30000) {
+        // Seems like PulseAudio is sleeping
+        // We will move phase ourself
+        float speed = bpm / 60.0 * 0.5;
+        phase += ((float)time_delta.tv_usec * 0.000001) * speed * direction;
+        if (direction == 1 && phase >= 1.0) {
+          phase = 1.0;
+          direction = -1;
+        } else if (direction == -1 && phase < 0.0) {
+          phase = 0.0;
+          direction = 1;
+        }
+        last_time = now;
+      }
+    }
+    curTail = (int) (phase * appData.nTails);
+#else
     if (curTail == 0 && tailDir == -1) {
         curTail = 1;
         tailDir = 1;
@@ -1536,6 +1676,7 @@ static void UpdateEyesAndTail()
     } else {
         curTail += tailDir;
     }
+#endif
 }
 
 
