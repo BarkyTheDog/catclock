@@ -85,8 +85,8 @@ void InitBellAlarm(win, width, height, fontInfo, fontList, fg, bg, state, on)
     Window        win;
     int           width, height;
     XFontStruct  *fontInfo;
-    Pixel         fg, bg;
     XmFontList    fontList;
+    Pixel         fg, bg;
     Boolean      *state, *on;
 {
     xmFontList = fontList;
@@ -225,7 +225,7 @@ static void TextScroll(val)
     XFlush(dpy);
 }
 
-void ReadAlarmFile(file)
+static void ReadAlarmFile(file)
     char  *file;
 {
     char       *cp, *tp, *dp;
@@ -456,7 +456,7 @@ void SetBell(seconds)
     alarmBell = seconds;
 }
 
-void AlarmOff()
+void AlarmOff(void)
 {
     struct itimerval tv;
     

@@ -1,9 +1,9 @@
 /*
  *  alarm.h -- externs
  */
-extern void InitBellAlarm();
-extern void SetAlarm();
-extern void SetBell();
-extern void GetBellSize();
-extern void AlarmOff();
-extern void DrawBell();
+extern void InitBellAlarm(Window, int, int, XFontStruct *, XmFontList, Pixel, Pixel, Boolean *, Boolean *);
+extern void SetAlarm(char *);
+extern void SetBell(int);
+extern void GetBellSize(int *, int *);
+extern void AlarmOff(void);
+extern void DrawBell(int);
