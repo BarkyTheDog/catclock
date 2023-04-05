@@ -830,11 +830,10 @@ static void *TempoTrackerThread() {
 
   aubio_tempo_t *tempo = new_aubio_tempo("default", BUFSIZE, HOPSIZE, SAMPLERATE);
   fvec_t *tempo_out = new_fvec(2);
+  fvec_t *aubio_buf = new_fvec(BUFSIZE);
+  
   for (;;) {
-    float buf[BUFSIZE];
-    pa_simple_read(s, buf, sizeof(buf), &error);
-    fvec_t *aubio_buf = new_fvec(BUFSIZE);
-    aubio_buf->data = buf;
+    pa_simple_read(s, aubio_buf->data, sizeof(float) * BUFSIZE, &error);
     aubio_tempo_do(tempo, aubio_buf, tempo_out);
     float confidence = aubio_tempo_get_confidence(tempo);
     Boolean is_beat = tempo_out->data[0] != 0.0;
