@@ -1,3 +1,35 @@
+
+<div align="right">
+  <details>
+    <summary >🌐 Language</summary>
+    <div>
+      <div align="center">
+        <a href="https://openaitx.github.io/view.html?user=BarkyTheDog&project=catclock&lang=en">English</a>
+        | <a href="https://openaitx.github.io/view.html?user=BarkyTheDog&project=catclock&lang=zh-CN">简体中文</a>
+        | <a href="https://openaitx.github.io/view.html?user=BarkyTheDog&project=catclock&lang=zh-TW">繁體中文</a>
+        | <a href="https://openaitx.github.io/view.html?user=BarkyTheDog&project=catclock&lang=ja">日本語</a>
+        | <a href="https://openaitx.github.io/view.html?user=BarkyTheDog&project=catclock&lang=ko">한국어</a>
+        | <a href="https://openaitx.github.io/view.html?user=BarkyTheDog&project=catclock&lang=hi">हिन्दी</a>
+        | <a href="https://openaitx.github.io/view.html?user=BarkyTheDog&project=catclock&lang=th">ไทย</a>
+        | <a href="https://openaitx.github.io/view.html?user=BarkyTheDog&project=catclock&lang=fr">Français</a>
+        | <a href="https://openaitx.github.io/view.html?user=BarkyTheDog&project=catclock&lang=de">Deutsch</a>
+        | <a href="https://openaitx.github.io/view.html?user=BarkyTheDog&project=catclock&lang=es">Español</a>
+        | <a href="https://openaitx.github.io/view.html?user=BarkyTheDog&project=catclock&lang=it">Italiano</a>
+        | <a href="https://openaitx.github.io/view.html?user=BarkyTheDog&project=catclock&lang=ru">Русский</a>
+        | <a href="https://openaitx.github.io/view.html?user=BarkyTheDog&project=catclock&lang=pt">Português</a>
+        | <a href="https://openaitx.github.io/view.html?user=BarkyTheDog&project=catclock&lang=nl">Nederlands</a>
+        | <a href="https://openaitx.github.io/view.html?user=BarkyTheDog&project=catclock&lang=pl">Polski</a>
+        | <a href="https://openaitx.github.io/view.html?user=BarkyTheDog&project=catclock&lang=ar">العربية</a>
+        | <a href="https://openaitx.github.io/view.html?user=BarkyTheDog&project=catclock&lang=fa">فارسی</a>
+        | <a href="https://openaitx.github.io/view.html?user=BarkyTheDog&project=catclock&lang=tr">Türkçe</a>
+        | <a href="https://openaitx.github.io/view.html?user=BarkyTheDog&project=catclock&lang=vi">Tiếng Việt</a>
+        | <a href="https://openaitx.github.io/view.html?user=BarkyTheDog&project=catclock&lang=id">Bahasa Indonesia</a>
+        | <a href="https://openaitx.github.io/view.html?user=BarkyTheDog&project=catclock&lang=as">অসমীয়া</
+      </div>
+    </div>
+  </details>
+</div>
+
 <p align="center">
   <img src="catclock.gif">
 </p>
