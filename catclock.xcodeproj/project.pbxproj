@@ -335,7 +335,7 @@
 					"$(inherited)",
 					/opt/local/lib,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = /usr/include;
 				USE_HEADERMAP = NO;
@@ -353,7 +353,7 @@
 					"$(inherited)",
 					/opt/local/lib,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = /usr/include;
 				USE_HEADERMAP = NO;
