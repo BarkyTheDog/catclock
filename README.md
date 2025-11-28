@@ -45,4 +45,7 @@ xclock [toolkitoptions]
        [-help]
 ```
 
+I've included source code for the oldest xclock I could find, in the X10 folder. This is likely X10R3. I obtained it from https://www.retro11.de/ouxr/43bsd/usr/src/new/X/xclock.
+
 Enjoy!
+
