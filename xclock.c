@@ -464,7 +464,7 @@ int main(int argc, char *argv[])
      */
     {
         Pixmap   iconPixmap;
-        char    *data;
+        char    *data = NULL;
         u_int    width = 0, height = 0;
     
         switch (clockMode) {
@@ -507,7 +507,11 @@ int main(int argc, char *argv[])
             exit(-1);
         }
     }
-    fontList = XmFontListCreate(appData.font, XmSTRING_ISO8859_1);
+    XmFontListEntry fontEntry = XmFontListEntryCreate(XmFONTLIST_DEFAULT_TAG,
+                                                       XmFONT_IS_FONT,
+                                                       (XtPointer)appData.font);
+    fontList = XmFontListAppendEntry(NULL, fontEntry);
+    XmFontListEntryFree(&fontEntry);
     if (fontList == (XmFontList)NULL) {
         fprintf(stderr, "xclock : Unable to create font list -- exiting\n");
         exit(-1);
@@ -1941,7 +1945,7 @@ static Widget CreateToggle(char *label, Widget parent)
     Arg         args[1];
     XmString    tcs;
 
-    tcs = XmStringLtoRCreate(label, XmSTRING_DEFAULT_CHARSET);
+    tcs = XmStringCreate(label, XmSTRING_DEFAULT_CHARSET);
 
     n = 0;
     XtSetArg(args[n], XmNlabelString, tcs);  n++;
@@ -1960,7 +1964,7 @@ static Widget CreatePushButton(char *label, Widget parent)
     Arg      args[1];
     XmString tcs;
 
-    tcs = XmStringLtoRCreate(label, XmSTRING_DEFAULT_CHARSET);
+    tcs = XmStringCreate(label, XmSTRING_DEFAULT_CHARSET);
 
     n = 0;
     XtSetArg(args[n], XmNlabelString, tcs);  n++;
